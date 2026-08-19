@@ -1,11 +1,11 @@
 {
   "name": "personal-pro-manager-real-accounts-lite",
   "private": true,
-  "version": "5.0.0",
+  "version": "5.1.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "node verify-files.mjs && vite build",
     "preview": "vite preview"
   },
   "dependencies": {
