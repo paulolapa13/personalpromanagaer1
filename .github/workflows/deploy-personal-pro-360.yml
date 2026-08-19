@@ -45,12 +45,17 @@ jobs:
       - name: Rebuild static package
         shell: bash
         run: |
+          rm -rf deploy360/site deploy360/site.b64 deploy360/site.zip
           mkdir -p deploy360/site
           cat deploy360/chunk*.b64 > deploy360/site.b64
           base64 -d deploy360/site.b64 > deploy360/site.zip
           unzip -q deploy360/site.zip -d deploy360/site
           test -f deploy360/site/index.html
+          test -f deploy360/site/config.js
           test -f deploy360/site/assets/app.js
+          test -f deploy360/site/assets/app.css
+          grep -q "hrdwitayhgogzdmovsfd.supabase.co" deploy360/site/config.js
+          grep -q "personal-pro-manager360.netlify.app" deploy360/site/config.js
 
       - name: Deploy production to Netlify
         working-directory: deploy360/site
@@ -58,4 +63,4 @@ jobs:
           NETLIFY_PROXY: ${{ steps.netlify.outputs.proxy }}
         shell: bash
         run: |
-          npx -y @netlify/mcp@latest --site-id 861e53ed-8c35-4480-bf55-ebac3f060db8 --proxy-path "$NETLIFY_PROXY"
+          npx -y @netlify/mcp@latest --site-id 99fbcec4-ad81-49dc-8c42-eac5c013b81d --proxy-path "$NETLIFY_PROXY"
